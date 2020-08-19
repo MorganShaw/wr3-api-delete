@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from "react";
+import axios from "axios";
+import "./App.css";
 
-function App() {
+class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      posts: []
+    }
+  }
+
+  componentDidMount(){
+    axios.get("/api/getposts").then(res => {
+      this.setState({
+        posts: res.data
+      })
+    })
+  }
+
+  deleteFromList(id) {
+    console.log(id)
+    axios.delete(`/api/deletepost/${id}`).then(res=>{
+      this.setState({
+        posts: res.data
+      })
+    });
+  }
+
+  render(){
+    const {posts} = this.state
+    console.log(posts)
+    const mappedPosts = posts.map(element => {
+      return <div key={element.id}>{element.description}
+      <button onClick={()=>this.deleteFromList(element.id)}>Delete</button>
+      </div>
+    })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <input></input>
+        {/* <input type="button" onClick={this.addToList}></input> */}
+      </form>
+      {mappedPosts}
     </div>
   );
-}
+}}
 
 export default App;
