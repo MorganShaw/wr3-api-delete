@@ -21,9 +21,9 @@ class App extends Component {
   deleteFromList(id) {
     console.log(id)
     axios.delete(`/api/deletepost/${id}`).then(res=>{
-      this.setState({
-        posts: res.data
-      })
+      // this.setState({
+      //   posts: res.data
+      // })
     });
   }
 

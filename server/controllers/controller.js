@@ -5,7 +5,7 @@ module.exports = {
         const {id} = req.params
         
         const deleted = await db.delete_posts(id)
-        res.status(200).send(['Deleted'])
+        res.status(200).send(deleted)
     },
 
     getPosts: async (req, res) => {
